@@ -168,7 +168,7 @@ add_action('customize_register', 'nadann_dizy_customize_register');
  * 발췌문 길이 설정
  */
 function nadann_dizy_excerpt_length($length) {
-    return 40;
+    return 80;
 }
 add_filter('excerpt_length', 'nadann_dizy_excerpt_length');
 
