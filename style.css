@@ -401,6 +401,45 @@ body {
   color: var(--color-text-muted);
 }
 
+/* 이미지 반응형 + 클릭 가능 */
+.article-body img,
+.wp-block-image img,
+.article-figure img {
+  max-width: 100%;
+  height: auto;
+  cursor: zoom-in;
+}
+
+/* 이미지 라이트박스 */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.lightbox-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lightbox-overlay img {
+  max-width: 95%;
+  max-height: 95%;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
 /* 인용문 */
 .article-body blockquote,
 .wp-block-quote {
