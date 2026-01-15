@@ -153,6 +153,11 @@ body {
   padding-top: 0;
 }
 
+.article-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
 .article-link {
   text-decoration: none;
   color: inherit;
@@ -384,21 +389,49 @@ body {
   color: var(--color-text-muted);
 }
 
-/* 아티클 푸터 */
+/* 아티클 푸터 - 이전/다음 글 네비게이션 */
 .article-footer {
-  margin-top: 4rem;
-  padding-top: 2rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
   border-top: 1px solid var(--color-border);
 }
 
-.back-link {
-  color: var(--color-text-muted);
-  text-decoration: none;
-  font-size: 0.95rem;
-  transition: color 0.2s;
+.post-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
 }
 
-.back-link:hover {
+.nav-previous,
+.nav-next {
+  flex: 1;
+  max-width: 45%;
+}
+
+.nav-next {
+  text-align: right;
+}
+
+.nav-label {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0.25rem;
+}
+
+.nav-title {
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: color 0.2s;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nav-title:hover {
   color: var(--color-accent);
 }
 
