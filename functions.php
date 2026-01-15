@@ -182,3 +182,45 @@ function nadann_dizy_body_classes($classes) {
     return $classes;
 }
 add_filter('body_class', 'nadann_dizy_body_classes');
+
+/**
+ * 글 목록에서 특정 글이 있는 페이지로 리다이렉트
+ */
+function nadann_dizy_highlight_redirect() {
+    if (!is_home() && !is_front_page()) return;
+    if (!isset($_GET['highlight'])) return;
+
+    $post_id = intval($_GET['highlight']);
+    if (!$post_id) return;
+
+    // 해당 글의 페이지 번호 계산
+    $posts_per_page = get_option('posts_per_page');
+
+    $args = array(
+        'post_type'      => 'post',
+        'post_status'    => 'publish',
+        'posts_per_page' => -1,
+        'fields'         => 'ids',
+        'orderby'        => 'date',
+        'order'          => 'DESC',
+    );
+
+    $all_posts = get_posts($args);
+    $position = array_search($post_id, $all_posts);
+
+    if ($position === false) return;
+
+    $page = floor($position / $posts_per_page) + 1;
+    $current_page = get_query_var('paged') ? get_query_var('paged') : 1;
+
+    // 다른 페이지에 있으면 리다이렉트
+    if ($page != $current_page && $page > 1) {
+        $redirect_url = add_query_arg(array(
+            'paged' => $page,
+            'highlight' => $post_id,
+        ), home_url('/'));
+        wp_redirect($redirect_url);
+        exit;
+    }
+}
+add_action('template_redirect', 'nadann_dizy_highlight_redirect');

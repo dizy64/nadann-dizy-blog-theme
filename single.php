@@ -12,6 +12,9 @@
         </div>
 
         <footer class="article-footer">
+          <div class="back-to-list">
+            <a href="<?php echo esc_url(add_query_arg('highlight', get_the_ID(), home_url('/'))); ?>">← 목록으로</a>
+          </div>
           <nav class="post-navigation">
             <?php
             $prev_post = get_previous_post();

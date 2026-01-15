@@ -136,6 +136,25 @@
       }
     });
   })();
+
+  // 하이라이트된 글로 스크롤
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var highlightId = params.get('highlight');
+    if (highlightId) {
+      var target = document.getElementById('post-' + highlightId);
+      if (target) {
+        setTimeout(function() {
+          var headerHeight = document.querySelector('.header').offsetHeight || 0;
+          var targetTop = target.getBoundingClientRect().top + window.scrollY;
+          var windowHeight = window.innerHeight;
+          var scrollTo = targetTop - (windowHeight / 2) + (target.offsetHeight / 2);
+          window.scrollTo({ top: Math.max(0, scrollTo), behavior: 'smooth' });
+          target.classList.add('highlighted');
+        }, 100);
+      }
+    }
+  })();
   </script>
 
   <?php wp_footer(); ?>
