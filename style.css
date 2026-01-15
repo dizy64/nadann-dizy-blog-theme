@@ -402,12 +402,22 @@ body {
 }
 
 /* 이미지 반응형 + 클릭 가능 */
-.article-body img,
-.wp-block-image img,
-.article-figure img {
-  max-width: 100%;
-  height: auto;
+.main img {
+  max-width: 100% !important;
+  height: auto !important;
   cursor: zoom-in;
+}
+
+/* 본문 링크 스타일 */
+.article-body a,
+.page-body a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.article-body a:hover,
+.page-body a:hover {
+  text-decoration: underline;
 }
 
 /* 이미지 라이트박스 */

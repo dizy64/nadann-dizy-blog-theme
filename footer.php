@@ -83,10 +83,40 @@
     var lightbox = document.getElementById('lightbox');
     var lightboxImg = lightbox.querySelector('img');
 
-    document.querySelectorAll('.article-body img, .wp-block-image img, .article-figure img').forEach(function(img) {
-      img.addEventListener('click', function() {
-        lightboxImg.src = this.src;
-        lightboxImg.alt = this.alt;
+    function getFullImageUrl(img) {
+      // 부모가 링크면 링크의 href 사용 (원본 이미지)
+      var parent = img.parentElement;
+      if (parent && parent.tagName === 'A' && parent.href) {
+        return parent.href;
+      }
+      // data-full-url 또는 data-src 확인
+      if (img.dataset.fullUrl) return img.dataset.fullUrl;
+      if (img.dataset.src) return img.dataset.src;
+      // srcset에서 가장 큰 이미지 추출
+      if (img.srcset) {
+        var sources = img.srcset.split(',').map(function(s) {
+          var parts = s.trim().split(' ');
+          return { url: parts[0], width: parseInt(parts[1]) || 0 };
+        });
+        sources.sort(function(a, b) { return b.width - a.width; });
+        if (sources.length > 0) return sources[0].url;
+      }
+      // 기본값: 현재 src
+      return img.src;
+    }
+
+    // 이미지 고정 크기 속성 제거 (반응형 적용, 비율 유지)
+    document.querySelectorAll('.main img').forEach(function(img) {
+      img.removeAttribute('width');
+      img.style.width = '';
+    });
+
+    document.querySelectorAll('.main img').forEach(function(img) {
+      img.addEventListener('click', function(e) {
+        e.preventDefault();
+        var fullUrl = getFullImageUrl(this);
+        lightboxImg.src = fullUrl;
+        lightboxImg.alt = this.alt || '';
         lightbox.classList.add('active');
         document.body.style.overflow = 'hidden';
       });
@@ -94,12 +124,14 @@
 
     lightbox.addEventListener('click', function() {
       this.classList.remove('active');
+      lightboxImg.src = '';
       document.body.style.overflow = '';
     });
 
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && lightbox.classList.contains('active')) {
         lightbox.classList.remove('active');
+        lightboxImg.src = '';
         document.body.style.overflow = '';
       }
     });
