@@ -11,6 +11,39 @@ Text Domain: nadann-dizy-blog
 Tags: blog, one-column, custom-menu, footer-widgets, translation-ready, minimalist
 */
 
+/* 나눔스퀘어라운드 폰트 */
+@font-face {
+  font-family: 'NanumSquareRound';
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+  src: url('./fonts/NanumSquareRoundL.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'NanumSquareRound';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('./fonts/NanumSquareRoundR.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'NanumSquareRound';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('./fonts/NanumSquareRoundB.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'NanumSquareRound';
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url('./fonts/NanumSquareRoundEB.woff2') format('woff2');
+}
+
 /* 기본 리셋 */
 *,
 *::before,

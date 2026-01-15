@@ -48,19 +48,11 @@ add_action('after_setup_theme', 'nadann_dizy_setup');
  * 스타일 및 스크립트 등록
  */
 function nadann_dizy_scripts() {
-    // 나눔스퀘어라운드 폰트
-    wp_enqueue_style(
-        'nanum-square-round',
-        'https://hangeul.pstatic.net/hangeul_static/css/nanum-square-round.css',
-        array(),
-        null
-    );
-
-    // 메인 스타일시트
+    // 메인 스타일시트 (폰트 포함)
     wp_enqueue_style(
         'nadann-dizy-style',
         get_stylesheet_uri(),
-        array('nanum-square-round'),
+        array(),
         wp_get_theme()->get('Version')
     );
 }
