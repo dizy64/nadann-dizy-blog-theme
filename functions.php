@@ -196,22 +196,22 @@ function nadann_dizy_highlight_redirect() {
     // 해당 글의 페이지 번호 계산
     $posts_per_page = get_option('posts_per_page');
 
-    $args = array(
-        'post_type'      => 'post',
-        'post_status'    => 'publish',
-        'posts_per_page' => -1,
-        'fields'         => 'ids',
-        'orderby'        => 'date',
-        'order'          => 'DESC',
-    );
-
-    $all_posts = get_posts($args);
-    $position = array_search($post_id, $all_posts);
-
-    if ($position === false) {
+    // 해당 글 존재 및 게시 상태 확인
+    $target_post = get_post($post_id);
+    if (!$target_post || $target_post->post_status !== 'publish' || $target_post->post_type !== 'post') {
         wp_redirect(home_url('/'));
         exit;
     }
+
+    // COUNT 쿼리로 위치 계산 (해당 글보다 최신인 글 개수)
+    global $wpdb;
+    $position = $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(*) FROM {$wpdb->posts}
+         WHERE post_type = 'post'
+         AND post_status = 'publish'
+         AND post_date > %s",
+        $target_post->post_date
+    ));
 
     $page = floor($position / $posts_per_page) + 1;
 

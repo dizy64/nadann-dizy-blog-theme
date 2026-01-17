@@ -75,18 +75,26 @@
   </footer>
 
   <!-- 이미지 라이트박스 -->
-  <div class="lightbox-overlay" id="lightbox">
+  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+    <button class="lightbox-close" aria-label="닫기">&times;</button>
     <img src="" alt="">
   </div>
   <script>
   (function() {
     var lightbox = document.getElementById('lightbox');
     var lightboxImg = lightbox.querySelector('img');
+    var closeBtn = lightbox.querySelector('.lightbox-close');
+    var previousActiveElement = null;
+
+    // 이미지 URL 검증 함수
+    function isImageUrl(url) {
+      return /\.(jpg|jpeg|png|gif|webp|svg)(\?.*)?$/i.test(url);
+    }
 
     function getFullImageUrl(img) {
-      // 부모가 링크면 링크의 href 사용 (원본 이미지)
+      // 부모가 링크면 링크의 href 사용 (원본 이미지) - URL 검증 추가
       var parent = img.parentElement;
-      if (parent && parent.tagName === 'A' && parent.href) {
+      if (parent && parent.tagName === 'A' && parent.href && isImageUrl(parent.href)) {
         return parent.href;
       }
       // data-full-url 또는 data-src 확인
@@ -105,6 +113,26 @@
       return img.src;
     }
 
+    function openLightbox(imgSrc, imgAlt) {
+      previousActiveElement = document.activeElement;
+      lightboxImg.src = imgSrc;
+      lightboxImg.alt = imgAlt || '';
+      lightbox.classList.add('active');
+      lightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      closeBtn.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove('active');
+      lightbox.setAttribute('aria-hidden', 'true');
+      lightboxImg.src = '';
+      document.body.style.overflow = '';
+      if (previousActiveElement) {
+        previousActiveElement.focus();
+      }
+    }
+
     // 이미지 인라인 스타일만 제거 (HTML 속성은 유지)
     document.querySelectorAll('.main img').forEach(function(img) {
       if (img.style.width) img.style.width = '';
@@ -115,24 +143,27 @@
       img.addEventListener('click', function(e) {
         e.preventDefault();
         var fullUrl = getFullImageUrl(this);
-        lightboxImg.src = fullUrl;
-        lightboxImg.alt = this.alt || '';
-        lightbox.classList.add('active');
-        document.body.style.overflow = 'hidden';
+        openLightbox(fullUrl, this.alt);
       });
     });
 
-    lightbox.addEventListener('click', function() {
-      this.classList.remove('active');
-      lightboxImg.src = '';
-      document.body.style.overflow = '';
+    // 닫기 버튼 클릭
+    closeBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      closeLightbox();
     });
 
+    // 오버레이 클릭 (이미지 외부)
+    lightbox.addEventListener('click', function(e) {
+      if (e.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    // ESC 키로 닫기
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-        lightbox.classList.remove('active');
-        lightboxImg.src = '';
-        document.body.style.overflow = '';
+        closeLightbox();
       }
     });
   })();

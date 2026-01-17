@@ -5,7 +5,7 @@
 
 ## 현재 상태
 - **버전**: 1.0.0
-- **서버 배포**: bermuda:/home/ec2-user/html/whiteluv/wp-content/themes/nadann-dizy-blog/
+- **서버 배포**: 별도 환경 설정 참조
 
 ## 디자인 특징
 - 심플한 헤더 (배경 없음, 어두운 폰트)
@@ -34,7 +34,7 @@ nadann-dizy-blog/
 ### 배포
 서버 배포 시 아래 명령어 사용:
 ```bash
-scp -r /Users/zero/Downloads/word-press-theme-creation/nadann-dizy-blog bermuda:/home/ec2-user/html/whiteluv/wp-content/themes/
+scp -r ./nadann-dizy-blog <SERVER>:<THEME_PATH>/
 ```
 
 ### 추가 가능한 기능
@@ -106,10 +106,9 @@ git add .
 git commit -m "feat: 기능 설명"
 
 # 서버 배포
-scp -r . bermuda:/home/ec2-user/html/whiteluv/wp-content/themes/nadann-dizy-blog/
+scp -r . <SERVER>:<THEME_PATH>/
 ```
 
 ### 참고 경로
-- 로컬: `/Users/zero/Downloads/word-press-theme-creation/nadann-dizy-blog/`
-- 서버: `bermuda:/home/ec2-user/html/whiteluv/wp-content/themes/nadann-dizy-blog/`
-- HTML 미리보기: `/Users/zero/Downloads/word-press-theme-creation/` (npx serve로 실행)
+- 서버 배포 경로: 별도 환경 설정 참조
+- HTML 미리보기: 프로젝트 루트에서 `npx serve` 실행

@@ -467,6 +467,32 @@ body {
   border-radius: 4px;
 }
 
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-close:hover,
+.lightbox-close:focus {
+  background: rgba(255, 255, 255, 0.25);
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
 /* 인용문 */
 .article-body blockquote,
 .wp-block-quote {
