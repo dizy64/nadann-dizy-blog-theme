@@ -141,6 +141,10 @@
 
     document.querySelectorAll('.main img').forEach(function(img) {
       img.addEventListener('click', function(e) {
+        var link = this.closest('a');
+        if (link && link.href && !isImageUrl(link.href)) {
+          return; // 비-이미지 링크면 기본 동작 유지
+        }
         e.preventDefault();
         var fullUrl = getFullImageUrl(this);
         openLightbox(fullUrl, this.alt);

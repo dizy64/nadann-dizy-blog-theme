@@ -15,7 +15,7 @@
 - 반응형 디자인
 
 ## 파일 구조
-```
+```text
 nadann-dizy-blog/
 ├── style.css       # 테마 정보 + 스타일
 ├── functions.php   # 테마 기능 (메뉴, 위젯, 커스터마이저)
