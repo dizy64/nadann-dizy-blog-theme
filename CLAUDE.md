@@ -32,9 +32,9 @@ nadann-dizy-blog/
 ## Claude 작업 지시사항
 
 ### 배포
-서버 배포 시 아래 명령어 사용:
+서버 배포 시 아래 명령어 사용 (.git, CLAUDE.md 제외):
 ```bash
-scp -r ./nadann-dizy-blog <SERVER>:<THEME_PATH>/
+rsync -avz --exclude='.git' --exclude='CLAUDE.md' ./ <SERVER>:<THEME_PATH>/
 ```
 
 ### 추가 가능한 기능
@@ -105,8 +105,8 @@ scp -r ./nadann-dizy-blog <SERVER>:<THEME_PATH>/
 git add .
 git commit -m "feat: 기능 설명"
 
-# 서버 배포
-scp -r . <SERVER>:<THEME_PATH>/
+# 서버 배포 (.git, CLAUDE.md 제외)
+rsync -avz --exclude='.git' --exclude='CLAUDE.md' ./ <SERVER>:<THEME_PATH>/
 ```
 
 ### 참고 경로
