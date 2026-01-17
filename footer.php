@@ -105,10 +105,10 @@
       return img.src;
     }
 
-    // 이미지 고정 크기 속성 제거 (반응형 적용, 비율 유지)
+    // 이미지 인라인 스타일만 제거 (HTML 속성은 유지)
     document.querySelectorAll('.main img').forEach(function(img) {
-      img.removeAttribute('width');
-      img.style.width = '';
+      if (img.style.width) img.style.width = '';
+      if (img.style.height) img.style.height = '';
     });
 
     document.querySelectorAll('.main img').forEach(function(img) {
@@ -137,20 +137,21 @@
     });
   })();
 
-  // 하이라이트된 글로 스크롤
+  // 하이라이트된 글로 스크롤 (해시 방식)
   (function() {
-    var params = new URLSearchParams(window.location.search);
-    var highlightId = params.get('highlight');
-    if (highlightId) {
-      var target = document.getElementById('post-' + highlightId);
+    var hash = window.location.hash;
+    if (hash && hash.startsWith('#post-')) {
+      var target = document.getElementById(hash.substring(1));
       if (target) {
         setTimeout(function() {
-          var headerHeight = document.querySelector('.header').offsetHeight || 0;
           var targetTop = target.getBoundingClientRect().top + window.scrollY;
           var windowHeight = window.innerHeight;
           var scrollTo = targetTop - (windowHeight / 2) + (target.offsetHeight / 2);
           window.scrollTo({ top: Math.max(0, scrollTo), behavior: 'smooth' });
           target.classList.add('highlighted');
+
+          // URL에서 해시 제거
+          history.replaceState(null, '', window.location.pathname + window.location.search);
         }, 100);
       }
     }

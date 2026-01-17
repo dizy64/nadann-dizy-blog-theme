@@ -417,9 +417,12 @@ body {
 
 /* 이미지 반응형 + 클릭 가능 */
 .main img {
-  max-width: 100% !important;
-  height: auto !important;
+  max-width: 95%;
+  height: auto;
   cursor: zoom-in;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* 본문 링크 스타일 */

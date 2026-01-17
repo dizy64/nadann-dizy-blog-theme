@@ -184,7 +184,7 @@ function nadann_dizy_body_classes($classes) {
 add_filter('body_class', 'nadann_dizy_body_classes');
 
 /**
- * 글 목록에서 특정 글이 있는 페이지로 리다이렉트
+ * 글 목록에서 특정 글이 있는 페이지로 리다이렉트 (해시 방식)
  */
 function nadann_dizy_highlight_redirect() {
     if (!is_home() && !is_front_page()) return;
@@ -208,19 +208,20 @@ function nadann_dizy_highlight_redirect() {
     $all_posts = get_posts($args);
     $position = array_search($post_id, $all_posts);
 
-    if ($position === false) return;
-
-    $page = floor($position / $posts_per_page) + 1;
-    $current_page = get_query_var('paged') ? get_query_var('paged') : 1;
-
-    // 다른 페이지에 있으면 리다이렉트
-    if ($page != $current_page && $page > 1) {
-        $redirect_url = add_query_arg(array(
-            'paged' => $page,
-            'highlight' => $post_id,
-        ), home_url('/'));
-        wp_redirect($redirect_url);
+    if ($position === false) {
+        wp_redirect(home_url('/'));
         exit;
     }
+
+    $page = floor($position / $posts_per_page) + 1;
+
+    // 해시 URL로 리다이렉트 (쿼리 파라미터 없이)
+    if ($page > 1) {
+        $redirect_url = home_url('/page/' . $page . '/#post-' . $post_id);
+    } else {
+        $redirect_url = home_url('/#post-' . $post_id);
+    }
+    wp_redirect($redirect_url);
+    exit;
 }
 add_action('template_redirect', 'nadann_dizy_highlight_redirect');
