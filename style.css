@@ -387,9 +387,8 @@ body {
 }
 
 .article-figure img {
-  width: 100%;
+  max-width: 100%;
   height: auto;
-  border-radius: 8px;
 }
 
 .article-figure figcaption {
@@ -404,10 +403,6 @@ body {
   margin: 2.5rem 0;
 }
 
-.wp-block-image img {
-  border-radius: 8px;
-}
-
 .wp-block-image figcaption {
   margin-top: 0.75rem;
   text-align: center;
@@ -417,7 +412,7 @@ body {
 
 /* 이미지 반응형 + 클릭 가능 */
 .main img {
-  max-width: 95%;
+  max-width: 100%;
   height: auto;
   cursor: zoom-in;
   display: block;
@@ -464,7 +459,6 @@ body {
   max-width: 95%;
   max-height: 95%;
   object-fit: contain;
-  border-radius: 4px;
 }
 
 .lightbox-close {
