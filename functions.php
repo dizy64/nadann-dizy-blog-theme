@@ -238,7 +238,7 @@ function nadann_dizy_comment($comment, $args, $depth) {
     $tag = ('div' === $args['style']) ? 'div' : 'li';
     ?>
     <<?php echo $tag; ?> id="comment-<?php comment_ID(); ?>" <?php comment_class(empty($args['has_children']) ? '' : 'parent', $comment); ?>>
-        <article id="div-comment-<?php comment_ID(); ?>" class="comment-body">
+        <article id="div-comment-<?php comment_ID(); ?>" class="comment-article">
             <div class="comment-meta">
                 <span class="comment-author"><?php echo get_comment_author_link($comment); ?></span>
                 <time class="comment-date" datetime="<?php comment_time('c'); ?>">
@@ -249,7 +249,7 @@ function nadann_dizy_comment($comment, $args, $depth) {
                 <?php endif; ?>
             </div>
 
-            <div class="comment-content">
+            <div class="comment-body">
                 <?php comment_text(); ?>
             </div>
 
