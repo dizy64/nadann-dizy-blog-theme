@@ -82,6 +82,14 @@
               <li>아직 댓글이 없습니다.</li>
             <?php endif; ?>
           </ul>
+
+          <h3 class="footer-subtitle">관리</h3>
+          <ul>
+            <?php wp_register(); ?>
+            <li><?php wp_loginout(); ?></li>
+            <li><a href="<?php bloginfo('rss2_url'); ?>">글 RSS</a></li>
+            <li><a href="<?php bloginfo('comments_rss2_url'); ?>">댓글 RSS</a></li>
+          </ul>
         </div>
       <?php endif; ?>
     </div>
