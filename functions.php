@@ -276,7 +276,6 @@ function nadann_dizy_comment($comment, $args, $depth) {
                     </span>
                 <?php endif; ?>
             </div>
-            <?php
         </article>
     <?php
 }
