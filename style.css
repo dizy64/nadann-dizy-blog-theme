@@ -442,6 +442,30 @@ body {
   margin-bottom: 0.75rem;
 }
 
+/* 목록 스타일 */
+.article-body ul,
+.article-body ol {
+  margin: 1.5rem 0;
+  padding-left: 1.75rem;
+}
+
+.article-body li {
+  margin-bottom: 0.5rem;
+  line-height: 1.8;
+}
+
+.article-body li::marker {
+  color: var(--color-text-muted);
+}
+
+/* 중첩 목록 */
+.article-body ul ul,
+.article-body ul ol,
+.article-body ol ul,
+.article-body ol ol {
+  margin: 0.5rem 0;
+}
+
 /* 이미지 피규어 */
 .article-figure {
   margin: 2.5rem 0;
