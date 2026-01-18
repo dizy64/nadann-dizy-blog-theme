@@ -921,15 +921,22 @@ body {
   text-decoration: underline;
 }
 
-/* 답글/수정 링크 */
+/* 답글/수정/삭제 링크 */
+.comment-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
 .reply,
-.edit-link {
+.edit-link,
+.delete-link {
   display: inline-block;
-  margin-right: 0.75rem;
 }
 
 .reply a,
-.edit-link a {
+.edit-link a,
+.delete-link a {
   color: var(--color-text-muted);
   text-decoration: none;
   font-size: 0.85rem;
@@ -939,6 +946,10 @@ body {
 .reply a:hover,
 .edit-link a:hover {
   color: var(--color-accent);
+}
+
+.delete-link a:hover {
+  color: #d32f2f;
 }
 
 /* 승인 대기 */

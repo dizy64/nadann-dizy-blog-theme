@@ -266,9 +266,17 @@ function nadann_dizy_comment($comment, $args, $depth) {
                 'before'    => '<div class="reply">',
                 'after'     => '</div>',
             )));
-
-            edit_comment_link('수정', '<span class="edit-link">', '</span>');
             ?>
+
+            <div class="comment-actions">
+                <?php edit_comment_link('수정', '<span class="edit-link">', '</span>'); ?>
+                <?php if (current_user_can('moderate_comments')) : ?>
+                    <span class="delete-link">
+                        <a href="<?php echo esc_url(admin_url('comment.php?action=trash&c=' . $comment->comment_ID . '&_wpnonce=' . wp_create_nonce('delete-comment_' . $comment->comment_ID))); ?>" onclick="return confirm('이 댓글을 삭제하시겠습니까?');">삭제</a>
+                    </span>
+                <?php endif; ?>
+            </div>
+            <?php
         </article>
     <?php
 }
