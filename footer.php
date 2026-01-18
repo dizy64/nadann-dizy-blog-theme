@@ -57,13 +57,30 @@
         </div>
       <?php else : ?>
         <div class="footer-widget">
-          <h3>관리</h3>
-          <ul>
-            <?php wp_register(); ?>
-            <li><?php wp_loginout(); ?></li>
-            <li><a href="<?php bloginfo('rss2_url'); ?>">글 RSS</a></li>
-            <li><a href="<?php bloginfo('comments_rss2_url'); ?>">댓글 RSS</a></li>
-            <li><a href="https://wordpress.org/">WordPress.org</a></li>
+          <h3>최신 댓글</h3>
+          <ul class="recent-comments">
+            <?php
+            $recent_comments = get_comments(array(
+              'number' => 5,
+              'status' => 'approve',
+            ));
+            if ($recent_comments) :
+              foreach ($recent_comments as $comment) :
+            ?>
+              <li class="recent-comment">
+                <span class="comment-author-name"><?php echo esc_html($comment->comment_author); ?></span>
+                <span class="comment-on">님이</span>
+                <a href="<?php echo esc_url(get_permalink($comment->comment_post_ID)); ?>#comment-<?php echo $comment->comment_ID; ?>">
+                  <?php echo esc_html(get_the_title($comment->comment_post_ID)); ?>
+                </a>
+                <span class="comment-on">에</span>
+              </li>
+            <?php
+              endforeach;
+            else :
+            ?>
+              <li>아직 댓글이 없습니다.</li>
+            <?php endif; ?>
           </ul>
         </div>
       <?php endif; ?>
