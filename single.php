@@ -20,7 +20,7 @@
           ?>
           <div class="nav-previous">
             <?php if ($prev_post) : ?>
-              <span class="nav-label">&larr; 이전 글</span>
+              <span class="nav-label"><?php esc_html_e('&larr; 이전 글', 'nadann-dizy-blog'); ?></span>
               <a href="<?php echo esc_url(get_permalink($prev_post)); ?>" class="nav-title">
                 <?php echo esc_html($prev_post->post_title); ?>
               </a>
@@ -28,7 +28,7 @@
           </div>
           <div class="nav-next">
             <?php if ($next_post) : ?>
-              <span class="nav-label">다음 글 &rarr;</span>
+              <span class="nav-label"><?php esc_html_e('다음 글 &rarr;', 'nadann-dizy-blog'); ?></span>
               <a href="<?php echo esc_url(get_permalink($next_post)); ?>" class="nav-title">
                 <?php echo esc_html($next_post->post_title); ?>
               </a>

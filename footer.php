@@ -9,7 +9,7 @@
         </div>
       <?php else : ?>
         <div class="footer-widget">
-          <h3>검색</h3>
+          <h3><?php esc_html_e('검색', 'nadann-dizy-blog'); ?></h3>
           <?php get_search_form(); ?>
         </div>
       <?php endif; ?>
@@ -20,7 +20,7 @@
         </div>
       <?php else : ?>
         <div class="footer-widget">
-          <h3>카테고리</h3>
+          <h3><?php esc_html_e('카테고리', 'nadann-dizy-blog'); ?></h3>
           <ul>
             <?php wp_list_categories(array(
               'title_li' => '',
@@ -36,7 +36,7 @@
         </div>
       <?php else : ?>
         <div class="footer-widget">
-          <h3>최신 글</h3>
+          <h3><?php esc_html_e('최신 글', 'nadann-dizy-blog'); ?></h3>
           <ul>
             <?php
             $recent_posts = wp_get_recent_posts(array(
@@ -57,7 +57,7 @@
         </div>
       <?php else : ?>
         <div class="footer-widget">
-          <h3>최신 댓글</h3>
+          <h3><?php esc_html_e('최신 댓글', 'nadann-dizy-blog'); ?></h3>
           <ul class="recent-comments">
             <?php
             $recent_comments = get_comments(array(
@@ -69,26 +69,26 @@
             ?>
               <li class="recent-comment">
                 <span class="comment-author-name"><?php echo esc_html($comment->comment_author); ?></span>
-                <span class="comment-on">님이</span>
-                <a href="<?php echo esc_url(get_permalink($comment->comment_post_ID)); ?>#comment-<?php echo $comment->comment_ID; ?>">
+                <span class="comment-on"><?php esc_html_e('님이', 'nadann-dizy-blog'); ?></span>
+                <a href="<?php echo esc_url(get_comment_link($comment->comment_ID)); ?>">
                   <?php echo esc_html(get_the_title($comment->comment_post_ID)); ?>
                 </a>
-                <span class="comment-on">에</span>
+                <span class="comment-on"><?php esc_html_e('에', 'nadann-dizy-blog'); ?></span>
               </li>
             <?php
               endforeach;
             else :
             ?>
-              <li>아직 댓글이 없습니다.</li>
+              <li><?php esc_html_e('아직 댓글이 없습니다.', 'nadann-dizy-blog'); ?></li>
             <?php endif; ?>
           </ul>
 
-          <h3 class="footer-subtitle">관리</h3>
+          <h3 class="footer-subtitle"><?php esc_html_e('관리', 'nadann-dizy-blog'); ?></h3>
           <ul>
             <?php wp_register(); ?>
             <li><?php wp_loginout(); ?></li>
-            <li><a href="<?php bloginfo('rss2_url'); ?>">글 RSS</a></li>
-            <li><a href="<?php bloginfo('comments_rss2_url'); ?>">댓글 RSS</a></li>
+            <li><a href="<?php bloginfo('rss2_url'); ?>"><?php esc_html_e('글 RSS', 'nadann-dizy-blog'); ?></a></li>
+            <li><a href="<?php bloginfo('comments_rss2_url'); ?>"><?php esc_html_e('댓글 RSS', 'nadann-dizy-blog'); ?></a></li>
           </ul>
         </div>
       <?php endif; ?>
@@ -101,7 +101,7 @@
 
   <!-- 이미지 라이트박스 -->
   <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
-    <button class="lightbox-close" aria-label="닫기">&times;</button>
+    <button class="lightbox-close" aria-label="<?php esc_attr_e('닫기', 'nadann-dizy-blog'); ?>">&times;</button>
     <img src="" alt="">
   </div>
   <script>
