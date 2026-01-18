@@ -282,8 +282,9 @@ body {
 .footer-widget ul ul,
 .footer-widget .children {
   margin-top: 0.5rem;
-  margin-left: 1rem;
-  padding-left: 0;
+  margin-left: 0.5rem;
+  padding-left: 1rem;
+  border-left: 1px solid var(--color-border);
 }
 
 .footer-widget ul ul li,
