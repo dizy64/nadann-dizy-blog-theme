@@ -55,6 +55,11 @@ function nadann_dizy_scripts() {
         array(),
         wp_get_theme()->get('Version')
     );
+
+    // 대댓글 기능을 위한 스크립트
+    if (is_singular() && comments_open() && get_option('thread_comments')) {
+        wp_enqueue_script('comment-reply');
+    }
 }
 add_action('wp_enqueue_scripts', 'nadann_dizy_scripts');
 
@@ -230,3 +235,47 @@ function nadann_dizy_highlight_redirect() {
     exit;
 }
 add_action('template_redirect', 'nadann_dizy_highlight_redirect');
+
+/**
+ * 커스텀 댓글 콜백 함수
+ */
+function nadann_dizy_comment($comment, $args, $depth) {
+    $tag = ('div' === $args['style']) ? 'div' : 'li';
+    ?>
+    <<?php echo $tag; ?> id="comment-<?php comment_ID(); ?>" <?php comment_class(empty($args['has_children']) ? '' : 'parent', $comment); ?>>
+        <article id="div-comment-<?php comment_ID(); ?>" class="comment-article">
+            <div class="comment-meta">
+                <span class="comment-author"><?php echo get_comment_author_link($comment); ?></span>
+                <time class="comment-date" datetime="<?php comment_time('c'); ?>">
+                    <?php echo get_comment_date('Y년 n월 j일', $comment); ?>
+                </time>
+                <?php if ('0' == $comment->comment_approved) : ?>
+                    <span class="comment-awaiting-moderation">승인 대기 중</span>
+                <?php endif; ?>
+            </div>
+
+            <div class="comment-body">
+                <?php comment_text(); ?>
+            </div>
+
+            <?php
+            comment_reply_link(array_merge($args, array(
+                'add_below' => 'div-comment',
+                'depth'     => $depth,
+                'max_depth' => $args['max_depth'],
+                'before'    => '<div class="reply">',
+                'after'     => '</div>',
+            )));
+            ?>
+
+            <div class="comment-actions">
+                <?php edit_comment_link('수정', '<span class="edit-link">', '</span>'); ?>
+                <?php if (current_user_can('moderate_comments')) : ?>
+                    <span class="delete-link">
+                        <a href="<?php echo esc_url(admin_url('comment.php?action=trash&c=' . $comment->comment_ID . '&_wpnonce=' . wp_create_nonce('delete-comment_' . $comment->comment_ID))); ?>" onclick="return confirm('이 댓글을 삭제하시겠습니까?');">삭제</a>
+                    </span>
+                <?php endif; ?>
+            </div>
+        </article>
+    <?php
+}
