@@ -735,6 +735,16 @@ body {
   color: var(--color-text);
 }
 
+.comment-author a {
+  color: var(--color-accent);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.comment-author a:hover {
+  opacity: 0.8;
+}
+
 .comment-date {
   color: var(--color-text-muted);
 }

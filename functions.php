@@ -55,6 +55,11 @@ function nadann_dizy_scripts() {
         array(),
         wp_get_theme()->get('Version')
     );
+
+    // 대댓글 기능을 위한 스크립트
+    if (is_singular() && comments_open() && get_option('thread_comments')) {
+        wp_enqueue_script('comment-reply');
+    }
 }
 add_action('wp_enqueue_scripts', 'nadann_dizy_scripts');
 
