@@ -48,19 +48,11 @@ add_action('after_setup_theme', 'nadann_dizy_setup');
  * 스타일 및 스크립트 등록
  */
 function nadann_dizy_scripts() {
-    // 나눔스퀘어라운드 폰트
-    wp_enqueue_style(
-        'nanum-square-round',
-        'https://hangeul.pstatic.net/hangeul_static/css/nanum-square-round.css',
-        array(),
-        null
-    );
-
-    // 메인 스타일시트
+    // 메인 스타일시트 (폰트 포함)
     wp_enqueue_style(
         'nadann-dizy-style',
         get_stylesheet_uri(),
-        array('nanum-square-round'),
+        array(),
         wp_get_theme()->get('Version')
     );
 }
@@ -168,7 +160,7 @@ add_action('customize_register', 'nadann_dizy_customize_register');
  * 발췌문 길이 설정
  */
 function nadann_dizy_excerpt_length($length) {
-    return 40;
+    return 80;
 }
 add_filter('excerpt_length', 'nadann_dizy_excerpt_length');
 
@@ -190,3 +182,51 @@ function nadann_dizy_body_classes($classes) {
     return $classes;
 }
 add_filter('body_class', 'nadann_dizy_body_classes');
+
+/**
+ * 글 목록에서 특정 글이 있는 페이지로 리다이렉트 (해시 방식)
+ */
+function nadann_dizy_highlight_redirect() {
+    if (!is_home()) return;
+    if (!isset($_GET['highlight'])) return;
+
+    $post_id = intval($_GET['highlight']);
+    if (!$post_id) return;
+
+    // 해당 글의 페이지 번호 계산
+    $posts_per_page = max(1, intval(get_option('posts_per_page')));
+    $posts_page_id = intval(get_option('page_for_posts'));
+
+    // 해당 글 존재 및 게시 상태 확인
+    $target_post = get_post($post_id);
+    if (!$target_post || $target_post->post_status !== 'publish' || $target_post->post_type !== 'post') {
+        wp_redirect(home_url('/'));
+        exit;
+    }
+
+    // COUNT 쿼리로 위치 계산 (해당 글보다 최신인 글 개수)
+    global $wpdb;
+    $position = $wpdb->get_var($wpdb->prepare(
+        "SELECT COUNT(*) FROM {$wpdb->posts}
+         WHERE post_type = 'post'
+         AND post_status = 'publish'
+         AND post_date > %s",
+        $target_post->post_date
+    ));
+
+    $page = floor($position / $posts_per_page) + 1;
+
+    // 글 목록 페이지 기준 URL 생성 (정적 프런트 페이지 설정 대응)
+    $base_url = $posts_page_id ? get_permalink($posts_page_id) : home_url('/');
+    $base_url = trailingslashit($base_url);
+
+    // 해시 URL로 리다이렉트 (쿼리 파라미터 없이)
+    if ($page > 1) {
+        $redirect_url = $base_url . 'page/' . $page . '/#post-' . $post_id;
+    } else {
+        $redirect_url = $base_url . '#post-' . $post_id;
+    }
+    wp_redirect(esc_url($redirect_url));
+    exit;
+}
+add_action('template_redirect', 'nadann_dizy_highlight_redirect');

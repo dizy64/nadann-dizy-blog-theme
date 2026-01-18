@@ -12,7 +12,31 @@
         </div>
 
         <footer class="article-footer">
-          <a href="<?php echo esc_url(home_url('/')); ?>" class="back-link">&larr; 목록으로 돌아가기</a>
+          <div class="back-to-list">
+            <a href="<?php echo esc_url(add_query_arg('highlight', get_the_ID(), home_url('/'))); ?>">← 목록으로</a>
+          </div>
+          <nav class="post-navigation">
+            <?php
+            $prev_post = get_previous_post();
+            $next_post = get_next_post();
+            ?>
+            <div class="nav-previous">
+              <?php if ($prev_post) : ?>
+                <span class="nav-label">&larr; 이전 글</span>
+                <a href="<?php echo esc_url(get_permalink($prev_post)); ?>" class="nav-title">
+                  <?php echo esc_html($prev_post->post_title); ?>
+                </a>
+              <?php endif; ?>
+            </div>
+            <div class="nav-next">
+              <?php if ($next_post) : ?>
+                <span class="nav-label">다음 글 &rarr;</span>
+                <a href="<?php echo esc_url(get_permalink($next_post)); ?>" class="nav-title">
+                  <?php echo esc_html($next_post->post_title); ?>
+                </a>
+              <?php endif; ?>
+            </div>
+          </nav>
         </footer>
       </article>
     <?php endwhile; endif; ?>
