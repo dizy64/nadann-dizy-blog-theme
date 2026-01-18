@@ -278,6 +278,20 @@ body {
   margin-bottom: 0.5rem;
 }
 
+/* 서브 카테고리 (중첩 목록) */
+.footer-widget ul ul,
+.footer-widget .children {
+  margin-top: 0.5rem;
+  margin-left: 1rem;
+  padding-left: 0;
+}
+
+.footer-widget ul ul li,
+.footer-widget .children li {
+  margin-bottom: 0.35rem;
+  font-size: 0.85rem;
+}
+
 .footer-widget a {
   color: var(--color-text-muted);
   text-decoration: none;
